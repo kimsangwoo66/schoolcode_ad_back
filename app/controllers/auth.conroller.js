@@ -14,6 +14,7 @@ exports.signup = (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8), //bcrypt 를 통해 암호화
+    school: req.body.school,
   })
     .then((user) => {
       if (req.body.roles) {
@@ -80,6 +81,7 @@ exports.signin = (req, res) => {
           id: user.id,
           username: user.username,
           email: user.email,
+          school: user.school,
           roles: authorities,
           accessToken: token,
         });

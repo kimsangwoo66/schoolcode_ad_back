@@ -1,5 +1,5 @@
 exports.allAccess = (req, res) => {
-  res.status(200).send("모든 사용자 공개 내용.");
+  res.status(200).send("schoolcode 관리자 플랫폼"); //모든 사용자 공개 내용.
 };
 
 exports.userBoard = (req, res) => {
