@@ -3,6 +3,8 @@ const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
 
+const Puser = db.puser; //폰유저 객체 생성
+
 const Op = db.Sequelize.Op;
 
 var jwt = require("jsonwebtoken");
@@ -89,6 +91,39 @@ exports.signin = (req, res) => {
     })
     .catch((err) => {
       //실패시 오류 메시지
+      res.status(500).send({ message: err.message });
+    });
+};
+
+exports.psignup = (req, res) => {
+  //모바일 사용자 회원가입 등록
+  // DB에 새 user 생성
+  Puser.create({
+    username: req.body.username,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8), //bcrypt 를 통해 암호화
+  })
+    .then((user) => {
+      if (req.body.roles) {
+        Role.findAll({
+          where: {
+            name: {
+              [Op.or]: req.body.roles,
+            },
+          },
+        }).then((roles) => {
+          user.setRoles(roles).then(() => {
+            res.send({ message: "회원가입에 성공했습니다!" });
+          });
+        });
+      } else {
+        // user role = 1
+        user.setRoles([1]).then(() => {
+          res.send({ message: "회원가입에 성공했습니다!" });
+        });
+      }
+    })
+    .catch((err) => {
       res.status(500).send({ message: err.message });
     });
 };

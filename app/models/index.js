@@ -4,7 +4,7 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
   dialect: config.dialect,
-  operatorsAliases: false,
+  operatorsAliases: 0,
 
   pool: {
     max: config.pool.max,
@@ -20,6 +20,7 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user.model")(sequelize, Sequelize);
 db.role = require("../models/role.model")(sequelize, Sequelize);
+db.puser = require("../models/puser.model")(sequelize, Sequelize); //앱 유저
 
 //user 테이블과 role테이블의 외래키와 기본키를 이용해 새로운 관계를 나타낸 user_roles 테이블 생성
 db.role.belongsToMany(db.user, {
