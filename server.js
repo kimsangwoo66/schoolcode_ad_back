@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //db
 const db = require("./app/models");
-const Role = db.role;
+const Role = db.trole;
 
 //db.sequelize.sync(); 테이블이 삭제 안되고 계속 유지 ...
 //프로덕션의 경우 이러한 행을 수동으로 삽입하고 sync()매개 변수없이 사용 하여 데이터 삭제를 방지
@@ -37,7 +37,7 @@ app.get("/", (req, res) => {
 
 //routes
 require("./app/routes/auth.routes.js")(app);
-require("./app/routes/user.routes")(app);
+//require("./app/routes/user.routes")(app);
 
 //포트 정하기 , 요청에 응답
 const PORT = process.env.PORT || 8080;
@@ -61,4 +61,5 @@ function initial() {
     name: "admin",
   });
 }
+
 app.use;

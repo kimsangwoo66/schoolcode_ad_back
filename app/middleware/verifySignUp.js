@@ -1,10 +1,11 @@
 const db = require("../models");
 const ROLES = db.ROLES;
-const User = db.user;
+//const User = db.user;
+const Tuser = db.tuser;
 //사용자 이름 또는 이메일 중복여부 , 역활 존재 여부 확인
 checkDuplicateUsernameOrEmail = (req, res, next) => {
   // 유저이름
-  User.findOne({
+  Tuser.findOne({
     where: {
       username: req.body.username,
     },
@@ -17,7 +18,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
     }
 
     // 이메일
-    User.findOne({
+    /*User.findOne({
       where: {
         email: req.body.email,
       },
@@ -30,10 +31,26 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
       }
 
       next();
+    }); */
+
+    Tuser.findOne({
+      where: {
+        userid: req.body.userid,
+      },
+    }).then((user) => {
+      if (user) {
+        res.status(400).send({
+          message: "아이디가 이미 존재합니다.",
+        });
+        return;
+      }
+
+      next();
     });
   });
 };
 //권한 설정검사
+
 checkRolesExisted = (req, res, next) => {
   if (req.body.roles) {
     for (let i = 0; i < req.body.roles.length; i++) {
