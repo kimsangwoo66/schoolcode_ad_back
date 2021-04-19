@@ -7,6 +7,7 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
   // 유저이름
   Tuser.findOne({
     where: {
+      //선생님 정보 테이블에 중복된이름이 존재하는지 확인
       username: req.body.username,
     },
   }).then((user) => {
@@ -33,9 +34,10 @@ checkDuplicateUsernameOrEmail = (req, res, next) => {
       next();
     }); */
 
+    //선생님 아이디
     Tuser.findOne({
       where: {
-        userid: req.body.userid,
+        userid: req.body.userid, //중복된 선생님 아이디가 존재하는지 확인
       },
     }).then((user) => {
       if (user) {

@@ -39,6 +39,7 @@ db.user.belongsToMany(db.role, {
 */
 
 db.trole.belongsToMany(db.tuser, {
+  //시퀄라이즈로 관계데이터베이스 테이블 구성 방법
   through: "user_roles",
   foreignkey: "roleId",
   otherkey: "userId",

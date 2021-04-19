@@ -161,25 +161,26 @@ exports.tsignup = (req, res) => {
       }
     })
     .catch((err) => {
-      res.status(500).send({ message: err.message });
+      res.status(500).send({ message: err.message }); //서버 코드에 문제가 있을경우의 에러메시지
     });
 };
 
 exports.tsignin = (req, res) => {
   Tuser.findOne({
-    //입력한 사용자 이름이 db에 있는지 찾는다.
+    //입력한 아이디가 선생님 테이블 안에 있는지 찾음
     where: {
       userid: req.body.userid,
     },
   })
     .then((user) => {
       if (!user) {
+        //사용자가 없을경우 사용자를 찾을 수없다는 console 메시지
         return res.status(404).send({ message: "User Not found." });
       }
-      //비밀번호 확인 검사
+      //비밀번호 복호화 및 검증 메소드
       var passwordIsValid = bcrypt.compareSync(
-        req.body.userpassword,
-        user.userpassword
+        req.body.password,
+        user.password
       );
 
       if (!passwordIsValid) {
@@ -208,7 +209,7 @@ exports.tsignin = (req, res) => {
           userschool: user.userschool,
           userposition: user.userposition,
           //roles: authorities,
-          //accessToken: token,
+          accessToken: token,
         });
       });
     })
