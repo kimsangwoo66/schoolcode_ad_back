@@ -10,7 +10,7 @@ module.exports = function (app) {
     );
     next();
   });
-
+  /*
   app.post(
     "/api/auth/signup",
     [
@@ -19,8 +19,18 @@ module.exports = function (app) {
     ],
     controller.signup //회원가입 메소드 호출
   );
+  */
 
-  app.post("/api/auth/signin", controller.signin); //로그인 메소드 호출
+  //app.post("/api/auth/signin", controller.signin); //로그인 메소드 호출
 
-  app.post("/api/auth/psignup", controller.psignup); //모바일 회원가입 정보 mysql에 가져오기
+  //app.post("/api/auth/psignup", controller.psignup); //모바일 회원가입 정보 mysql에 가져오기
+  app.post(
+    "/api/auth/signup",
+    [
+      verifySignUp.checkDuplicateUsernameOrEmail, // 회원가입 중복 아이디를 확인
+      //verifySignUp.checkRolesExisted,
+    ],
+    controller.tsignup
+  ); //웹 회원가입 정보 mysql에 가져오기
+  app.post("/api/auth/signin", controller.tsignin); //로그인 메소드 호출
 };
