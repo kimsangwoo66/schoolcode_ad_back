@@ -23,6 +23,7 @@ db.sequelize = sequelize;
 //db.puser = require("../models/puser.model")(sequelize, Sequelize); //앱 유저
 db.tuser = require("../models/tuser.model")(sequelize, Sequelize); //웹 선생님 유저
 db.trole = require("../models/role.model")(sequelize, Sequelize);
+db.ntable = require("../models/noticetable.model")(sequelize, Sequelize); //공지사항 테이블
 
 //user 테이블과 role테이블의 외래키와 기본키를 이용해 새로운 관계를 나타낸 user_roles 테이블 생성
 /*db.role.belongsToMany(db.user, {

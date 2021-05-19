@@ -5,6 +5,7 @@ const Role = db.role;
 
 //const Puser = db.puser; //폰유저 객체 생성
 const Tuser = db.tuser; //선생님 유저 객체 생성
+const Ntable = db.ntable;
 
 const Op = db.Sequelize.Op;
 
@@ -215,6 +216,31 @@ exports.tsignin = (req, res) => {
     })
     .catch((err) => {
       //실패시 오류 메시지
+      res.status(500).send({ message: err.message });
+    });
+};
+
+exports.noticeup = (req, res) => {
+  //공지사항 게시판 입력 완료후 게시판 업데이트 및
+  //DB에 저장된 공지사항 화면에 띄우기 ...아직미완 프론트엔드 재 구성
+  Ntable.create({
+    noticetitle: req.body.noticetitle,
+    username: req.body.username,
+    userposition: req.body.userposition,
+    noticecontent: req.body.userposition,
+    openrange: req.body.openrange,
+  });
+
+  res
+    .status(200)
+    .send({
+      noticetitle: noticetitle,
+      username: username,
+      userposition: userposition,
+      noticecontent: noticecontent,
+      openrange: openrange,
+    })
+    .catch((err) => {
       res.status(500).send({ message: err.message });
     });
 };
